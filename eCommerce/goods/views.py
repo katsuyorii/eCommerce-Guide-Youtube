@@ -6,6 +6,7 @@ class Catalog(ListView):
     model = Product
     template_name = 'goods/catalog.html'
     context_object_name = 'products'
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
