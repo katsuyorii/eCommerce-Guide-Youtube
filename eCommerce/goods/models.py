@@ -14,11 +14,13 @@ class Category(models.Model):
     '''
     Переопределение метода сохранения записи.
     С помощью библиотеки pytils мы переводим киррилицу в латиницу по полю name.
-    Здесь поле name уникальное, проблем нет, но если поле не будет уникальным, то нужно добавлять к slug что-то в конец, чтобы не было ошибки.
+    Авто-слаг, при добавлении в конец слага добавляется id.
     '''
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.name) + '-' + str(self.pk)
+            super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -33,6 +35,12 @@ class Product(models.Model):
     discount = models.DecimalField(verbose_name='Скидка:', default=0.00, decimal_places=2, max_digits=7, help_text='В процентах (%)')
     count = models.PositiveIntegerField(verbose_name='Количество на складе:', default=0)
     category = models.ForeignKey(verbose_name='Категория:', to=Category, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super(Product, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.name) + '-' + str(self.pk)
+            super(Product, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Продукт'
