@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from pytils.translit import slugify
 
 
@@ -48,3 +49,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("product_detail", kwargs={"product_slug": self.slug})
+    
+    def sell_price(self):
+        if self.discount:
+            return round(self.price - (self.price * self.discount / 100), 2)
+        
+        return self.price
