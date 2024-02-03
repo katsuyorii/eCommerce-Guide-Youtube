@@ -154,3 +154,6 @@ AUTH_USER_MODEL = 'users.User'
 
 # Редирект на страницу после успешной авторизации
 LOGIN_REDIRECT_URL = 'index'
+
+# Редирект на страницу после выхода из системы
+LOGOUT_REDIRECT_URL = 'index'
