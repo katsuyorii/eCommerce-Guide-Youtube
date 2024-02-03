@@ -9,6 +9,20 @@
                 <h2 class="text-center mb-4">Авторизация</h2>
                 <form method="POST">
                     {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="container mt-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger alert-dismissible fade show custom-shadow" role="alert">
+                                        <p>{{ form.non_field_errors }}</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
                     <div class="mb-3">
                         <label for="id_username" class="form-label">Имя пользователя</label>
                         <input type="text" class="form-control" name="username" id="id_username" placeholder="Введите ваше имя пользователя" required>
