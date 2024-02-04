@@ -152,8 +152,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
+# Редирект на страницу после выхода из системы
+LOGOUT_REDIRECT_URL = 'login'
+
 # Редирект на страницу после успешной авторизации
 LOGIN_REDIRECT_URL = 'index'
-
-# Редирект на страницу после выхода из системы
-LOGOUT_REDIRECT_URL = 'index'

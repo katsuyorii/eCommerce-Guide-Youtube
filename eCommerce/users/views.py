@@ -1,4 +1,6 @@
-from django.urls import reverse_lazy
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView
@@ -27,5 +29,10 @@ class Registration(CreateView):
 
         return context
 
+def logout_user(request):
+    logout(request)
+    return redirect(reverse('index'))
+
 class Profile(TemplateView):
     template_name = 'users/profile.html'
+
