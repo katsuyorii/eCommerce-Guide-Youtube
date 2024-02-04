@@ -1,10 +1,10 @@
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.base import TemplateView
 from django.contrib.auth.views import LoginView
-from django.views.generic.edit import CreateView
-from .forms import UserLoginForm, UserRegistrationForm
+from django.views.generic.edit import CreateView, UpdateView
+from .forms import UserLoginForm, UserRegistrationForm, ProfileForm
+from .models import User
 
 class Login(LoginView):
     form_class = UserLoginForm
@@ -33,6 +33,21 @@ def logout_user(request):
     logout(request)
     return redirect(reverse('index'))
 
-class Profile(TemplateView):
+class Profile(UpdateView):
+    model = User
+    form_class = ProfileForm
     template_name = 'users/profile.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
+    
+    '''Переопределение метода, чтобы вернуть текущего пользователя, дабы не добавлять pk или slug в url'''
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'User profile'
+
+        return context
 
