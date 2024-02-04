@@ -5,11 +5,16 @@ from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView, UpdateView
 from .forms import UserLoginForm, UserRegistrationForm, ProfileForm
 from .models import User
+from django.contrib import messages
 
 class Login(LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Вы вошли в аккаунт!')
+        return super().form_valid(form)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Login'
