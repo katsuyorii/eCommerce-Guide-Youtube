@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.base import TemplateView
 from .forms import UserLoginForm, UserRegistrationForm, ProfileForm
 from .models import User
 from django.contrib import messages
@@ -55,4 +56,8 @@ class Profile(UpdateView):
         context['title'] = 'User profile'
 
         return context
+    
+
+class UsersCart(TemplateView):
+    template_name = 'users/users-cart.html'
 
